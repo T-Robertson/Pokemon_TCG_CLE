@@ -2,56 +2,151 @@
 Pokemon TCG Card Definitions
 Contains all the card data for the game
 """
+from collections import namedtuple
+import re
+from dataclasses import dataclass
+import random
+import json
 
+# ─────────────────────────── Data classes ────────────────────────────────────
+@dataclass
 class Card:
-    def __init__(self, name, card_type, hp=0, damage=0, energy_cost=0, description=""):
-        self.name = name
-        self.card_type = card_type  # "pokemon", "energy", "trainer"
-        self.hp = hp
-        self.damage = damage
-        self.energy_cost = energy_cost
-        self.description = description
-        self.attached_energy = 0
+    name: str
+    set_code: str
+    number: str
+    category: str = "Unknown"
+    attacks: list = None
+    abilities: list = None 
+    hp: int = 0
+    evolvesTo: str = ""
+    evolvesFrom: str = ""
+    retreatCost: int = 0
+    weaknessto: str = "" 
+    damage: int = 0
+    action: str = ""
+    attacks: dict = None
+    description: str = ""
+    subtype: str = ""
+    attached_energy: list = None
+
+    @property
+    def key(self) -> tuple:
+        """Unique identifier: (name, set_code, number) – case-insensitive."""
+        return (self.name.lower(), self.set_code.upper(), self.number)
 
     def __str__(self):
-        if self.card_type == "pokemon":
-            return f"{self.name} (HP: {self.hp}, DMG: {self.damage}, Energy: {self.attached_energy}/{self.energy_cost})"
-        elif self.card_type == "energy":
-            return f"{self.name} Energy"
-        else:
-            return f"{self.name} ({self.description})"
+        if self.category == "Pokemon":
+            return f"{self.name} (Type: {self.category}, Subtype: {self.subtype} , HP: {self.damage}/{self.hp})"
+        elif self.category == "Trainer":
+            return f"{self.name} (Type: {self.category})"
+        elif self.category == "Energy":
+            return f"{self.name} (Type: {self.category})"
+        
 
-# Define Rock-type Pokémon
-ROCK_POKEMON = [
-    Card("Geodude", "pokemon", hp=60, damage=20, energy_cost=1, description="Rock Throw"),
-    Card("Graveler", "pokemon", hp=90, damage=40, energy_cost=2, description="Rock Slide"),
-    Card("Golem", "pokemon", hp=120, damage=70, energy_cost=3, description="Earthquake"),
-    Card("Onix", "pokemon", hp=90, damage=30, energy_cost=2, description="Rock Throw"),
-    Card("Rhyhorn", "pokemon", hp=80, damage=30, energy_cost=2, description="Horn Attack"),
-    Card("Rhydon", "pokemon", hp=100, damage=50, energy_cost=3, description="Horn Drill"),
-    Card("Sudowoodo", "pokemon", hp=70, damage=30, energy_cost=1, description="Rock Throw"),
-    Card("Larvitar", "pokemon", hp=50, damage=10, energy_cost=1, description="Bite"),
-    Card("Pupitar", "pokemon", hp=70, damage=30, energy_cost=2, description="Rock Slide"),
-    Card("Tyranitar", "pokemon", hp=130, damage=80, energy_cost=4, description="Hyper Beam"),
-]
+# ─────────────────────────── Deck Creation ───────────────────────────────────
+def create_decklist():
+    # Get decklist from text file
+    try:
+        with open("Deck_1.txt", encoding="utf-8") as fh:
+            deck_text = fh.read()
+    except AttributeError:
+        print("[INFO] No deck file given.")
+    decklist = parse_deck_string(deck_text)       
+            
+    random.shuffle(decklist)
+    return decklist
 
-# Define Energy cards
-ENERGY_CARDS = [
-    Card("Rock", "energy", description="Provides energy for Rock-type Pokémon"),
-] * 20  # 20 energy cards
+# ─────────────────────────── Parsers ─────────────────────────────────────────
 
-# Define Trainer cards
-TRAINER_CARDS = [
-    Card("Potion", "trainer", description="Heal 20 damage from one of your Pokémon"),
-    Card("Energy Retrieval", "trainer", description="Add an energy card from your discard pile to your hand"),
-    Card("Professor's Research", "trainer", description="Discard your hand and draw 7 cards"),
-    Card("Switch", "trainer", description="Switch your active Pokémon with one on your bench"),
-    Card("Pokémon Center", "trainer", description="Heal all damage from your active Pokémon"),
-]
+# Matches lines like: "3 Snorunt ASC 46"  or  "1 Mega Froslass ex ASC 47"
+_LINE_RE = re.compile(
+    r"^(?P<qty>\d+)\s+(?P<name>.+?)\s+(?P<set>[A-Z]{2,4})\s+(?P<num>\d+[a-zA-Z]?)$"
+)
 
-# Create default rock deck
-def create_rock_deck():
-    import random
-    deck = ROCK_POKEMON.copy() + ENERGY_CARDS.copy() + TRAINER_CARDS.copy()
-    random.shuffle(deck)
-    return deck 
+def parse_deck_string(deck_text: str) -> list[Card]:
+    """
+    Parse a standard TCG deck list string into DeckCard objects.
+
+    Handles category headers (Pokémon:, Trainer:, Energy:) and
+    ignores blank lines, comment lines, and totals.
+    """
+    cards: list[Card] = []
+    current_category = "Unknown"
+    card_data = {}  # Initialize card_data as an empty dictionary
+
+    for raw_line in deck_text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        # Section header: "Pokémon: 21", "Trainer: 30", "Energy: 9"
+        header_match = re.match(r"^(Pok[eé]mon|Trainer|Energy)\s*:\s*\d*$", line, re.IGNORECASE)
+        if header_match:
+            label = header_match.group(1).lower()
+            if "pok" in label:
+                current_category = "Pokemon"
+            elif "trainer" in label:
+                current_category = "Trainer"
+            elif "energy" in label:
+                current_category = "Energy"
+            continue
+
+        # Check if card is not found in json database
+        try:
+            with open("card_data.json", "r") as f:
+                card_data = json.load(f)
+        except FileNotFoundError:
+            print("[INFO] card_data.json not found. Creating a new one.")
+            card_data = {} 
+
+        m = _LINE_RE.match(line)
+        if m:
+            #Check if the card is already in the card_data dictionary, if not add it
+            if m.group("name").strip() not in card_data:
+                add_card(m.group("name").strip(), m.group("set").strip(), m.group("num").strip(), current_category, card_data)
+            for x in range(int(m.group("qty"))):
+                cards.append(Card(
+                    name=m.group("name").strip(),
+                    set_code=m.group("set").strip(),
+                    number=m.group("num").strip(),
+                    category=current_category,
+                    hp=card_data.get(m.group("name").strip()).get("hp", 0),
+                    subtype=card_data.get(m.group("name").strip()).get("subtype", ""),
+                    evolvesTo=card_data.get(m.group("name").strip()).get("evolvesTo", ""),
+                    evolvesFrom=card_data.get(m.group("name").strip()).get("evolvesFrom", ""),
+                    retreatCost=card_data.get(m.group("name").strip()).get("retreatCost", 0),
+                    weaknessto=card_data.get(m.group("name").strip()).get("weaknessto", 0),
+                    damage=card_data.get(m.group("name").strip()).get("damage", 0),
+                    action=card_data.get(m.group("name").strip()).get("action", ""),
+                    description=card_data.get(m.group("name").strip()).get("description", ""),
+                    attached_energy=[]
+                ))
+
+    return cards
+
+def add_card(name, set_code, number, current_category, card_data):
+        card_data[name] = {
+                            "name":name,
+                            "set_code":set_code,
+                            "number":number,
+                            "category":current_category,
+                            "hp": 0,
+                            "subtype": "",
+                            "evolvesTo": "",
+                            "evolvesFrom": "",
+                            "retreatCost": 0,
+                            "weaknessto": "",
+                            "damage": 0,
+                            "action": "",
+                            "attacks": {"attack1": {"cost": [], "damage": 0, "Effect": ""},"attack2": {"cost": [], "damage": 0, "Effect": ""}},
+                            "description": ""
+                        }
+        #Save the card data to a json file for future reference
+        with open("card_data.json", "w", encoding="utf-8") as f:
+            json.dump(card_data, f, ensure_ascii=False, indent=4)
+
+# Test
+decklist = create_decklist()
+print(f"Decklist contains {len(decklist)} cards:")
+for card in decklist:
+    print(card)
