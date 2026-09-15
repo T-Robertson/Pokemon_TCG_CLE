@@ -1,0 +1,444 @@
+{
+    "Dreepy": {
+        "name": "Dreepy",
+        "set_code": "TWM",
+        "number": "128",
+        "category": "Pokemon",
+        "hp": 70,
+        "subtype": "Basic",
+        "evolvesTo": "Drakloak",
+        "evolvesFrom": "",
+        "retreatCost": 1,
+        "weaknessto": "",
+        "damage": 70,
+        "action": "",
+        "attacks": {
+            "Pretty Grudge": {
+                "cost": "1P",
+                "damage": 10
+            },
+            "Bite": {
+                "cost": "1P,1F",
+                "damage": 40
+            }
+        },
+        "description": ""
+    },
+    "Drakloak": {
+        "name": "Drakloak",
+        "set_code": "TWM",
+        "number": "129",
+        "category": "Pokemon",
+        "hp": 90,
+        "subtype": "Stage 1",
+        "evolvesTo": "Dragapult",
+        "evolvesFrom": "Dreepy",
+        "retreatCost": 1,
+        "weaknessto": "",
+        "damage": 90,
+        "action": "Recon Directive",
+        "attacks": {
+            "Dragon Headbutt": {
+                "cost": "1P,1F",
+                "damage": 70
+            }
+        },
+        "description": ""
+    },
+    "Dragapult ex": {
+        "name": "Dragapult ex",
+        "set_code": "TWM",
+        "number": "130",
+        "category": "Pokemon",
+        "hp": 320,
+        "subtype": "Stage 2",
+        "evolvesTo": "",
+        "evolvesFrom": "Drakloak",
+        "retreatCost": 1,
+        "weaknessto": "",
+        "damage": 320,
+        "action": "",
+        "attacks": {
+            "Jet Headbut": {
+                "cost": ["1E"],
+                "damage": 70
+            },
+            "Phantom Dive": {
+                "cost": ["1F","1P"],
+                "damage": 200
+            }
+        },
+        "description": ""
+    },
+    "Munkidori": {
+        "name": "Munkidori",
+        "set_code": "TWM",
+        "number": "95",
+        "category": "Pokemon",
+        "hp": 110,
+        "subtype": "Basic",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 1,
+        "weaknessto": "Darkness",
+        "damage": 110,
+        "action": "Adrena-Brain",
+        "attacks": {
+            "Mind Bend": {
+                "cost": ["1P","1E"],
+                "damage": 60
+            }
+        },
+        "description": ""
+    },
+    "Budew": {
+        "name": "Budew",
+        "set_code": "ASC",
+        "number": "16",
+        "category": "Pokemon",
+        "hp": 30,
+        "subtype": "Basic",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": "Fire",
+        "damage": 30,
+        "action": "",
+        "attacks": {
+            "Itchy Pollen": {
+                "cost": [],
+                "damage": 10,
+                "Effect":""
+            }
+        },
+        "description": ""
+    },
+    "Dunsparce": {
+        "name": "Dunsparce",
+        "set_code": "JTG",
+        "number": "120",
+        "category": "Pokemon",
+        "hp": 70,
+        "subtype": "Basic",
+        "evolvesTo": "Dundunsparce",
+        "evolvesFrom": "",
+        "retreatCost": 1,
+        "weaknessto": "Fighting",
+        "damage": 70,
+        "action": "",
+        "attacks": {
+            "Trading Places": {
+                "cost": ["1E"],
+                "damage": 0
+            },
+            "Ram": {
+                "cost": ["2E"],
+                "damage": 20
+            }
+        },
+        "description": ""
+    },
+    "Dudunsparce": {
+        "name": "Dudunsparce",
+        "set_code": "TEF",
+        "number": "129",
+        "category": "Pokemon",
+        "hp": 140,
+        "subtype": "Stage 1",
+        "evolvesTo": "",
+        "evolvesFrom": "Dunsparce",
+        "retreatCost": 3,
+        "weaknessto": "Fighting",
+        "damage": 140,
+        "action": "",
+        "attacks": {
+            "Land Crush": {
+                "cost": ["3E"],
+                "damage": 90
+            }
+        },
+        "description": ""
+    },
+    "Meowth ex": {
+        "name": "Meowth ex",
+        "set_code": "POR",
+        "number": "62",
+        "category": "Pokemon",
+        "hp": 170,
+        "subtype": "Basic",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 1,
+        "weaknessto": "Fighting",
+        "damage": 170,
+        "action": "",
+        "attacks": {
+            "attack1": {
+                "cost": "",
+                "damage": 0
+            }
+        },
+        "description": ""
+    },
+    "Fezandipiti ex": {
+        "name": "Fezandipiti ex",
+        "set_code": "ASC",
+        "number": "142",
+        "category": "Pokemon",
+        "hp": 210,
+        "subtype": "Basic",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 210,
+        "action": "Flip the Script",
+        "attacks": {
+            "attack1": {
+                "cost": "",
+                "damage": 0
+            }
+        },
+        "description": ""
+    },
+    "Lillie's Determination": {
+        "name": "Lillie's Determination",
+        "set_code": "MEG",
+        "number": "119",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Boss's Orders": {
+        "name": "Boss's Orders",
+        "set_code": "MEG",
+        "number": "114",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Crispin": {
+        "name": "Crispin",
+        "set_code": "SCR",
+        "number": "133",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Rosa's Encouragement": {
+        "name": "Rosa's Encouragement",
+        "set_code": "POR",
+        "number": "84",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Poké Pad": {
+        "name": "Poké Pad",
+        "set_code": "POR",
+        "number": "81",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Item",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Crushing Hammer": {
+        "name": "Crushing Hammer",
+        "set_code": "POR",
+        "number": "71",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Item",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Buddy-Buddy Poffin": {
+        "name": "Buddy-Buddy Poffin",
+        "set_code": "TEF",
+        "number": "144",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Item",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Night Stretcher": {
+        "name": "Night Stretcher",
+        "set_code": "ASC",
+        "number": "196",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Item",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Ultra Ball": {
+        "name": "Ultra Ball",
+        "set_code": "MEG",
+        "number": "131",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Item",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Unfair Stamp": {
+        "name": "Unfair Stamp",
+        "set_code": "TWM",
+        "number": "165",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Special Red Card": {
+        "name": "Special Red Card",
+        "set_code": "CRI",
+        "number": "82",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Item",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Risky Ruins": {
+        "name": "Risky Ruins",
+        "set_code": "MEG",
+        "number": "127",
+        "category": "Trainer",
+        "hp": 0,
+        "subtype": "Stadium",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Fire Energy": {
+        "name": "Fire Energy",
+        "set_code": "MEE",
+        "number": "2",
+        "category": "Energy",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Darkness Energy": {
+        "name": "Darkness Energy",
+        "set_code": "MEE",
+        "number": "7",
+        "category": "Energy",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    },
+    "Psychic Energy": {
+        "name": "Psychic Energy",
+        "set_code": "MEE",
+        "number": "5",
+        "category": "Energy",
+        "hp": 0,
+        "subtype": "",
+        "evolvesTo": "",
+        "evolvesFrom": "",
+        "retreatCost": 0,
+        "weaknessto": 0,
+        "damage": 0,
+        "action": "",
+        "attacks": {},
+        "description": ""
+    }
+}
