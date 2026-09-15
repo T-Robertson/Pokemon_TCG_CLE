@@ -7,7 +7,7 @@ A simple implementation of the Pokémon Trading Card Game with rock-type Pokémo
 import time
 import sys
 from player import Player
-from ascii_art import (
+from game_print import (
     print_title, print_board, print_turn_banner, 
     print_action, print_winner, print_help, print_hand
 )
@@ -61,7 +61,7 @@ def select_active_pokemon(player):
         print("\nSelect a basic Pokémon to be your active Pokémon:")
         basic_indices = []
         for i, card in enumerate(player.hand):
-            if card.card_type == "pokemon" and card.energy_cost <= 1:
+            if card.category == "Pokemon" and card.subtype == "Basic":
                 basic_indices.append(i)
                 print(f"{i+1}. {card}")
         
@@ -90,7 +90,7 @@ def select_bench_pokemon(player):
             print("\nSelect a basic Pokémon for your bench:")
             basic_indices = []
             for i, card in enumerate(player.hand):
-                if card.card_type == "pokemon" and card.energy_cost <= 1:
+                if card.category == "Pokemon" and card.subtype == "Basic":
                     basic_indices.append(i)
                     print(f"{i+1}. {card}")
             
@@ -114,11 +114,12 @@ def select_bench_pokemon(player):
             except ValueError:
                 print("Please enter a number.")
 
+
 def computer_setup(computer):
     """Set up the computer's active Pokémon and bench"""
     # Find all basic Pokémon in hand
     basic_indices = [i for i, card in enumerate(computer.hand) 
-                   if card.card_type == "pokemon" and card.energy_cost <= 1]
+                   if card.category == "Pokemon" and card.subtype == "Basic"]
     
     if not basic_indices:
         return  # Shouldn't happen due to mulligan checks
@@ -153,7 +154,7 @@ def player_turn(player, computer):
     player.can_attack = True
     
     # Display the player's hand with ASCII art
-    print_hand(player.hand)
+    #print_hand(player.hand)
     
     while True:
         # Print the current game state
@@ -210,7 +211,7 @@ def player_turn(player, computer):
             
             card = player.hand[card_index]
             
-            if card.card_type == "pokemon":
+            if card.category == "Pokemon":
                 # Determine if active or bench
                 target = "active" if not player.active_pokemon else "bench"
                 if target == "active":
@@ -226,7 +227,7 @@ def player_turn(player, computer):
                 else:
                     print_action(message)
             
-            elif card.card_type == "energy":
+            elif card.category == "Energy":
                 # Choose target for energy
                 if not player.active_pokemon and not player.bench:
                     print_action("You have no Pokémon to attach energy to!")
@@ -262,12 +263,22 @@ def player_turn(player, computer):
                 except ValueError:
                     print_action("Please enter a number.")
             
-            elif card.card_type == "trainer":
-                success, message = player.play_trainer(card_index)
-                if success:
-                    print_action(message)
+            elif card.category == "Trainer":
+                if card.subtype == "Item" or card.subtype == "Stadium":
+                    success, message = player.play_trainer(card_index)
+                    if success:
+                        print_action(message)
+                    else:
+                        print_action(message)
+                if not player.is_used_trainer:
+                    player.is_used_trainer = True
+                    success, message = player.play_trainer(card_index)
+                    if success:
+                        print_action(message)
+                    else:
+                        print_action(message)
                 else:
-                    print_action(message)
+                    print_action("You have already player a Trainer this Turn")
         
         else:
             print_action("Unknown command. Type 'help' for a list of commands.")
@@ -314,7 +325,7 @@ def computer_turn(computer, player):
     return "continue"
 
 def main():
-    """Main game loop"""
+    #Main game loop
     player, computer = setup_game()
     
     # Initial setup phase
@@ -333,7 +344,7 @@ def main():
     
     # Initial board state
     print_board(player, computer)
-    input("\nPress Enter to start the game...")
+    #input("\nPress Enter to start the game...")
     
     # Main game loop
     current_player = "player"  # Player goes first
@@ -341,9 +352,11 @@ def main():
     
     while game_result == "continue":
         if current_player == "player":
+            player.round + 1
             game_result = player_turn(player, computer)
             current_player = "computer"
         else:
+            computer.round + 1
             game_result = computer_turn(computer, player)
             current_player = "player"
     
